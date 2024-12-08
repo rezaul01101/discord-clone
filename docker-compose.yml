@@ -36,20 +36,33 @@ services:
   ####################################################################################################
   # Nginx
   ####################################################################################################
+  # nginx:
+  #   image: nginx:alpine
+  #   container_name: nginx-jax-laravel
+  #   restart: unless-stopped
+  #   ports:
+  #     - 80:80
+  #     - 443:443
+  #   volumes:
+  #     - ./:/var/www
+  #     - ./docker-compose/nginx:/etc/nginx/conf.d
+  #     - ./docker-compose/nginx/ssl:/etc/nginx/conf.d/ssl
+  #     - ./docker-compose/nginx/phpmyadmin.conf:/etc/nginx/conf.d/phpmyadmin.conf
+  #   networks:
+  #     - discord
+
   nginx:
-    image: nginx:alpine
-    container_name: nginx-jax-laravel
-    restart: unless-stopped
+    image: nginx:latest
+    container_name: nginx-server
     ports:
-      - 81:81
-      - 443:443
+      - "81:81"
     volumes:
       - ./:/var/www
       - ./docker-compose/nginx:/etc/nginx/conf.d
       - ./docker-compose/nginx/ssl:/etc/nginx/conf.d/ssl
       - ./docker-compose/nginx/phpmyadmin.conf:/etc/nginx/conf.d/phpmyadmin.conf
-    networks:
-      - discord
+    depends_on:
+      - app
   ####################################################################################################
   # phpMyAdmin
   ####################################################################################################
